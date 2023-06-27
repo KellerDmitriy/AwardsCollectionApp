@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @State private var awardIsShowing = false
-    
+    @State private var isRotated = false
     var body: some View {
         VStack {
             Button(action: buttonAction) {
@@ -23,8 +23,8 @@ struct MainView: View {
             Spacer()
             
             if awardIsShowing {
-                GradientRectangles()
-                    .frame(width: 250, height: 250)
+                Badge()
+                    .frame(width: 450, height: 450)
                     .transition(.customTransition)
             }
             
@@ -37,17 +37,19 @@ struct MainView: View {
     private func buttonAction() {
         withAnimation {
             awardIsShowing.toggle()
+            isRotated.toggle()
         }
     }
 }
 
 extension AnyTransition {
+    
     static var customTransition: AnyTransition {
-        let insertion = AnyTransition.move(edge: .leading)
-            .combined(with: .scale)
-        let removal = AnyTransition.move(edge: .trailing)
-            .combined(with: .scale)
-        return .asymmetric(insertion: insertion, removal: removal)
+            let insertion = AnyTransition.move(edge: .leading)
+                .combined(with: .scale)
+            let removal = AnyTransition.move(edge: .trailing)
+                .combined(with: .scale)
+            return .asymmetric(insertion: insertion, removal: removal)
     }
 }
 

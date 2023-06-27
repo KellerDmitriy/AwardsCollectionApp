@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MainView: View {
     @State private var awardIsShowing = false
-    @State private var isRotated = false
+    @State private var degrees = 0.0
+    
     var body: some View {
         VStack {
             Button(action: buttonAction) {
@@ -24,6 +25,7 @@ struct MainView: View {
             
             if awardIsShowing {
                 Badge()
+                    .rotation3DEffect(.degrees(45), axis: (x: 0, y: 1, z: -1))
                     .frame(width: 450, height: 450)
                     .transition(.customTransition)
             }
@@ -37,7 +39,6 @@ struct MainView: View {
     private func buttonAction() {
         withAnimation {
             awardIsShowing.toggle()
-            isRotated.toggle()
         }
     }
 }
@@ -45,11 +46,12 @@ struct MainView: View {
 extension AnyTransition {
     
     static var customTransition: AnyTransition {
-            let insertion = AnyTransition.move(edge: .leading)
-                .combined(with: .scale)
-            let removal = AnyTransition.move(edge: .trailing)
-                .combined(with: .scale)
-            return .asymmetric(insertion: insertion, removal: removal)
+        
+        let insertion = AnyTransition.move(edge: .leading)
+            .combined(with: .scale)
+        let removal = AnyTransition.move(edge: .trailing)
+            .combined(with: .scale)
+        return .asymmetric(insertion: insertion, removal: removal)
     }
 }
 

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @State private var awardIsShowing = false
-    @State private var degrees = 0.0
+   
     
     var body: some View {
         VStack {
@@ -48,9 +48,11 @@ extension AnyTransition {
     static var customTransition: AnyTransition {
         
         let insertion = AnyTransition.move(edge: .leading)
-            .combined(with: .scale)
+            .combined(with: .opacity)
+            .combined(with: identity)
         let removal = AnyTransition.move(edge: .trailing)
             .combined(with: .scale)
+            .combined(with: identity)
         return .asymmetric(insertion: insertion, removal: removal)
     }
 }
